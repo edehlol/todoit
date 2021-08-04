@@ -11,7 +11,6 @@ export const AppPage = () => {
   const handleShow = () => {
     setShow(!show);
   };
-  console.log(Offcanvas);
   return (
     <div>
       <Navbar>
@@ -24,14 +23,14 @@ export const AppPage = () => {
           <MdAccountCircle size="2rem" />
         </Container>
       </Navbar>
+
       <Row>
         {show && (
-          <Col xs="3">
+          <Col sm md="4" lg="3">
             <Sidebar />
           </Col>
         )}
-
-        <Col>
+        <Col sm>
           <TodoList />
         </Col>
       </Row>
