@@ -1,21 +1,40 @@
 import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { Button, ListGroup } from 'react-bootstrap';
+import { Button, ListGroup, Modal } from 'react-bootstrap';
 import { CgRadioCheck } from 'react-icons/cg';
 import { CgRadioChecked } from 'react-icons/cg';
-import { GrDrag } from 'react-icons/gr';
+import { GrDrag, GrEdit } from 'react-icons/gr';
+import { AiOutlineEdit } from 'react-icons/ai';
+import { MdEdit } from 'react-icons/md';
+import { TodoModal } from './TodoModal';
 
-export const TodoItem = React.forwardRef(({ title, description, index }, ref) => {
+export const TodoItem = React.forwardRef(({ title, description, index, todo }, ref) => {
   const [completed, setCompleted] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const toggleComplete = () => {
     setCompleted(!completed);
+  };
+  const onEditBtnClick = () => {
+    setShowEditModal(!showEditModal);
   };
   const mouseOver = () => {
     setIsHovering(true);
   };
   const mouseLeave = () => {
     setIsHovering(false);
+  };
+
+  const renderCheckbox = () => {
+    if (completed) {
+      return (
+        <CgRadioChecked size="1.5rem" style={{ marginRight: '1rem' }} onClick={toggleComplete} />
+      );
+    } else {
+      return (
+        <CgRadioCheck size="1.5rem" style={{ marginRight: '1rem' }} onClick={toggleComplete} />
+      );
+    }
   };
   return (
     <Draggable draggableId={String(index)} index={index}>
@@ -24,38 +43,38 @@ export const TodoItem = React.forwardRef(({ title, description, index }, ref) =>
           ref={provided.innerRef}
           onMouseOver={mouseOver}
           onMouseLeave={mouseLeave}
-          className="d-flex align-items-center justify-content-between"
+          className="d-flex align-items-center"
           style={{ cursor: 'pointer !important' }}
           {...provided.draggableProps}
         >
-          <div className="d-flex">
+          <div className="d-flex  w-100 ">
             <div
               {...provided.dragHandleProps}
-              className="d-flex align-items-center"
+              className="d-flex align-items-center text-secondary"
               style={{ marginLeft: '-1rem', visibility: isHovering ? 'visible' : 'hidden' }}
             >
-              <GrDrag />
+              <GrDrag color="green" style={{ fill: 'green' }} />
             </div>
+            <div>{renderCheckbox()}</div>
 
-            {completed ? (
-              <CgRadioChecked
-                size="1.5rem"
-                style={{ marginRight: '1rem' }}
-                onClick={toggleComplete}
-              />
-            ) : (
-              <CgRadioCheck
-                size="1.5rem"
-                style={{ marginRight: '1rem' }}
-                onClick={toggleComplete}
-              />
-            )}
-            <div>
-              <div style={{ textDecoration: completed ? 'line-through' : 'none' }}>{title}</div>
-              <div className="text-secondary">
-                <small>{description}</small>
+            <div className="d-flex justify-content-between w-100">
+              <div>
+                <div style={{ textDecoration: completed ? 'line-through' : 'none' }}>{title}</div>
+                <small className="text-secondary">{description}</small>
+              </div>
+
+              <div
+                className="align-items-center d-flex"
+                style={{
+                  visibility: isHovering ? 'visible' : 'hidden',
+                  cursor: 'pointer',
+                }}
+                onClick={onEditBtnClick}
+              >
+                <AiOutlineEdit size="1.25rem" />
               </div>
             </div>
+            <TodoModal show={showEditModal} toggle={onEditBtnClick} todo={todo} />
           </div>
         </ListGroup.Item>
       )}

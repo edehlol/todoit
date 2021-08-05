@@ -6,7 +6,7 @@ import { TodoItem } from './TodoItem';
 import { AddTaskBtn } from './AddTaskBtn';
 
 const initialData = [
-  { id: 1, title: 'Take out the garbage' },
+  { id: 1, title: 'Take out the garbage', description: 'is anyone there?' },
   { id: 2, title: 'Watch my favorite show' },
   { id: 3, title: 'Cook dinner' },
   { id: 4, title: 'Charge my phone' },
@@ -35,7 +35,15 @@ export const TodoList = () => {
   };
 
   const renderList = () => {
-    return todos.map((todo, index) => <TodoItem title={todo.title} index={index} key={index} />);
+    return todos.map((todo, index) => (
+      <TodoItem
+        todo={todo}
+        title={todo.title}
+        description={todo.description}
+        index={index}
+        key={index}
+      />
+    ));
   };
 
   return (
