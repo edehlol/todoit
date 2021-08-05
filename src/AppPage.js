@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Col, Container, Form, Navbar, Offcanvas, Row } from 'react-bootstrap';
+import { Col, Container, Form, Navbar, Row } from 'react-bootstrap';
 import { FiMenu } from 'react-icons/fi';
 import { MdAccountCircle } from 'react-icons/md';
 import { Sidebar } from './Sidebar';
-import { TodoList } from './TodoList';
+import { TodoList } from './features/todos/TodoList';
+import { Todos } from './features/todos/Todos';
 
 export const AppPage = () => {
   const [show, setShow] = useState(false);
@@ -31,7 +32,7 @@ export const AppPage = () => {
           </Col>
         )}
         <Col sm>
-          <TodoList />
+          <Todos />
         </Col>
       </Row>
     </div>
