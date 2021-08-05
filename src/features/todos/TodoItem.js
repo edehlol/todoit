@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { Button, ListGroup, Modal } from 'react-bootstrap';
+import { Button, ListGroup, Modal, OverlayTrigger, Popover, Tooltip } from 'react-bootstrap';
 import { CgRadioCheck } from 'react-icons/cg';
 import { CgRadioChecked } from 'react-icons/cg';
 import { GrDrag, GrEdit } from 'react-icons/gr';
 import { AiOutlineEdit } from 'react-icons/ai';
-import { MdEdit } from 'react-icons/md';
+import { BsThreeDots } from 'react-icons/bs';
 import { TodoModal } from './TodoModal';
 
 export const TodoItem = React.forwardRef(({ title, description, index, todo }, ref) => {
@@ -17,6 +17,9 @@ export const TodoItem = React.forwardRef(({ title, description, index, todo }, r
   };
   const onEditBtnClick = () => {
     setShowEditModal(!showEditModal);
+  };
+  const onOptionsBtnClick = () => {
+    console.log('too');
   };
   const mouseOver = () => {
     setIsHovering(true);
@@ -35,6 +38,20 @@ export const TodoItem = React.forwardRef(({ title, description, index, todo }, r
         <CgRadioCheck size="1.5rem" style={{ marginRight: '1rem' }} onClick={toggleComplete} />
       );
     }
+  };
+  const renderOptions = (props) => {
+    return (
+      <Popover {...props}>
+        <Popover.Body>
+          <ListGroup variant="flush">
+            <ListGroup.Item>test</ListGroup.Item>
+            <ListGroup.Item>gg</ListGroup.Item>
+            <ListGroup.Item>test</ListGroup.Item>
+            <ListGroup.Item>delete</ListGroup.Item>
+          </ListGroup>
+        </Popover.Body>
+      </Popover>
+    );
   };
   return (
     <Draggable draggableId={String(index)} index={index}>
@@ -74,6 +91,22 @@ export const TodoItem = React.forwardRef(({ title, description, index, todo }, r
                 <AiOutlineEdit size="1.25rem" />
               </div>
             </div>
+            <div
+              className="d-flex align-items-center"
+              style={{
+                marginLeft: '.5rem',
+                marginRight: '-1rem',
+                visibility: isHovering ? 'visible' : 'hidden',
+              }}
+              onClick={onOptionsBtnClick}
+            >
+              <OverlayTrigger placement="auto" overlay={renderOptions} trigger="click" rootClose>
+                <div>
+                  <BsThreeDots />
+                </div>
+              </OverlayTrigger>
+            </div>
+
             <TodoModal show={showEditModal} toggle={onEditBtnClick} todo={todo} />
           </div>
         </ListGroup.Item>
