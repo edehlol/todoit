@@ -3,11 +3,18 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { ListGroup } from 'react-bootstrap';
 import { reorder } from '../../utils/dragAndDrop';
 import { ListItem } from './ListItem';
+import { AddListModal } from './AddListModal';
 
 const gg = [{ title: 'Home Chores' }, { title: 'Welcome' }, { title: 'Web Development' }];
 
 export const ListsList = () => {
   const [lists, setLists] = useState(gg);
+
+  const [show, setShow] = useState(false);
+
+  const toggleShow = () => {
+    setShow(!show);
+  };
 
   const onDragEnd = (result) => {
     if (!result.destination) {
@@ -24,22 +31,25 @@ export const ListsList = () => {
       <Draggable draggableId={String(index)} index={index} key={index}>
         {(provided) => (
           <>
-            <ListItem provided={provided} list={list} />
+            <ListItem provided={provided} list={list} toggleEdit={toggleShow} />
           </>
         )}
       </Draggable>
     ));
   };
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="lists">
-        {(provided) => (
-          <ListGroup variant="flush" ref={provided.innerRef} {...provided.droppableProps}>
-            {renderList()}
-            {provided.placeholder}
-          </ListGroup>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="lists">
+          {(provided) => (
+            <ListGroup variant="flush" ref={provided.innerRef} {...provided.droppableProps}>
+              {renderList()}
+              {provided.placeholder}
+            </ListGroup>
+          )}
+        </Droppable>
+      </DragDropContext>
+      <AddListModal show={show} toggleShow={toggleShow} />
+    </>
   );
 };
