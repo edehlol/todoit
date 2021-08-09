@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Container, Form, ListGroup, Button } from 'react-bootstrap';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
@@ -6,6 +6,8 @@ import { TodoItem } from './TodoItem';
 import { AddTaskBtn } from './AddTaskBtn';
 
 import { reorder, onDragEnd } from '../../utils/dragAndDrop';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchData } from './todosSlice';
 
 const initialData = [
   { id: 1, title: 'Take out the garbage', description: 'is anyone there?' },
@@ -16,6 +18,11 @@ const initialData = [
 
 export const TodoList = () => {
   const [todos, setTodos] = useState(initialData);
+  const gg = useSelector((state) => state.todos);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchData());
+  }, [dispatch]);
 
   const onDragEnd = (result) => {
     if (!result.destination) {
