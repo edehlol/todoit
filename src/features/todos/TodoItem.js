@@ -5,9 +5,9 @@ import { ListGroup } from 'react-bootstrap';
 import { TodoModal } from './TodoModal';
 import { TodoActionsBtn } from './TodoActionsBtn';
 import { TodoEditBtn } from './TodoEditBtn';
-import { TodoDragBtn } from './TodoDragBtn';
 import { TodoCheckbox } from './TodoCheckbox';
 import { TodoContent } from './TodoContent';
+import { DragBtn } from '../common/DragBtn';
 
 export const TodoItem = React.forwardRef(({ index, todo }, ref) => {
   const [isHovering, setIsHovering] = useState(false);
@@ -34,7 +34,7 @@ export const TodoItem = React.forwardRef(({ index, todo }, ref) => {
           {...provided.draggableProps}
         >
           <div className="d-flex  w-100 ">
-            <TodoDragBtn provided={provided} isHovering={isHovering} />
+            <DragBtn provided={provided} isHovering={isHovering} />
             <TodoCheckbox completed={todo.completed} />
 
             <div className="d-flex justify-content-between w-100">

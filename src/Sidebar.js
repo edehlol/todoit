@@ -1,10 +1,11 @@
 import React from 'react';
 import { Container, ListGroup } from 'react-bootstrap';
-import { AiOutlinePlus } from 'react-icons/ai';
 import { CgToday } from 'react-icons/cg';
 import { HiOutlineClock } from 'react-icons/hi';
 import { AiOutlineContainer } from 'react-icons/ai';
 import { FiFlag } from 'react-icons/fi';
+import { AddListBtn } from './features/lists/AddListBtn';
+import { ListsList } from './features/lists/ListsList';
 
 export const Sidebar = () => {
   return (
@@ -38,13 +39,9 @@ export const Sidebar = () => {
 
       <div className="d-flex align-items-center justify-content-between">
         <h6 className="mb-0">My Lists</h6>
-        <AiOutlinePlus size="1.5rem" />
+        <AddListBtn />
       </div>
-
-      <ListGroup variant="flush">
-        <ListGroup.Item>Welcome</ListGroup.Item>
-        <ListGroup.Item>Web development</ListGroup.Item>
-      </ListGroup>
+      <ListsList />
     </Container>
   );
 };

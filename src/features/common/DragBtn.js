@@ -1,7 +1,7 @@
 import React from 'react';
-import { GrDrag, GrEdit } from 'react-icons/gr';
+import { GrDrag } from 'react-icons/gr';
 
-export const TodoDragBtn = ({ provided, isHovering }) => {
+export const DragBtn = ({ provided, isHovering }) => {
   return (
     <div
       {...provided.dragHandleProps}

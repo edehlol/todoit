@@ -7,7 +7,7 @@ import { TodoList } from './features/todos/TodoList';
 import { Todos } from './features/todos/Todos';
 
 export const AppPage = () => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
 
   const handleShow = () => {
     setShow(!show);

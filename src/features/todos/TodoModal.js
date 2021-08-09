@@ -13,12 +13,14 @@ export const TodoModal = ({ show, toggle, todo }) => {
             <Form.Control value={todo.title} className="mb-3" />
             <Form.Control value={todo.description} />
           </Form.Group>
-          <Button style={{ marginRight: '1rem' }}>Save</Button>
-          <Button variant="secondary" onClick={toggle}>
-            Cancel
-          </Button>
         </Form>
       </Modal.Body>
+      <Modal.Footer>
+        <Button style={{ marginRight: '1rem' }}>Save</Button>
+        <Button variant="secondary" onClick={toggle}>
+          Cancel
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 };
