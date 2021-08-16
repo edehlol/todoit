@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import { TodoList } from './TodoList';
+import { fetchTodos, selectCurrentList, selectTitle } from './todosSlice';
 
 export const Todos = () => {
+  const dispatch = useDispatch();
+  const todos = useSelector(selectCurrentList);
+  useEffect(() => {
+    dispatch(fetchTodos());
+  }, [dispatch]);
+  if (!todos) {
+    return <div>loading</div>;
+  }
   return (
     <Container>
       <div className="d-flex justify-content-between">
-        <h1>Home Chores</h1>
-        <h1>5</h1>
+        <h1>{todos.title}</h1>
+        <h1>{todos.tasks.length}</h1>
       </div>
       <TodoList />
     </Container>

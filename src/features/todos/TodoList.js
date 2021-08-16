@@ -7,22 +7,11 @@ import { AddTaskBtn } from './AddTaskBtn';
 
 import { reorder, onDragEnd } from '../../utils/dragAndDrop';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCurrentTodoList, fetchTodos, reorderTasks } from './todosSlice';
-
-// const initialData = [
-//   { id: 1, title: 'Take out the garbage', description: 'is anyone there?' },
-//   { id: 2, title: 'Watch my favorite show' },
-//   { id: 3, title: 'Cook dinner' },
-//   { id: 4, title: 'Charge my phone' },
-// ];
+import { reorderTasks, selectTasks } from './todosSlice';
 
 export const TodoList = () => {
-  const todos = useSelector((state) => selectCurrentTodoList(state, 0));
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchTodos());
-  }, [dispatch]);
+  const tasks = useSelector(selectTasks);
 
   const onDragEnd = (result) => {
     if (!result.destination) {
@@ -32,12 +21,12 @@ export const TodoList = () => {
       return;
     }
 
-    const reordered = reorder(todos.tasks, result.source.index, result.destination.index);
+    const reordered = reorder(tasks, result.source.index, result.destination.index);
     dispatch(reorderTasks(reordered));
   };
 
   const renderList = () => {
-    return todos.tasks.map((todo, index) => (
+    return tasks.map((todo, index) => (
       <TodoItem
         todo={todo}
         title={todo.title}
@@ -48,7 +37,7 @@ export const TodoList = () => {
     ));
   };
   // TODO: add scaffolding loading placeholder
-  if (!todos) {
+  if (!tasks) {
     return <div>loading</div>;
   }
 

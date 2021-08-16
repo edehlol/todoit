@@ -22,8 +22,12 @@ import axios from 'axios';
 // });
 
 export const fetchTodos = createAsyncThunk('todos/fetchTodos', async () => {
-  const response = await axios.get('http://localhost:3001/todos/');
-  return response.data;
+  const response = await axios.get('http://localhost:3001/lists?id=0');
+  console.log(response.data[0]);
+  return response.data[0];
+});
+export const postReorderedTasks = createAsyncThunk('todos/postReorderedTasks', async (tasks) => {
+  const response = await axios.post('http://localhost:3001/todos/');
 });
 
 const todosSlice = createSlice({
@@ -35,17 +39,17 @@ const todosSlice = createSlice({
     },
   },
   extraReducers: {
-    // [fetchCurrentTodoList.fulfilled]: (state, action) => {
-    //   return action.payload;
-    // },
     [fetchTodos.fulfilled]: (state, action) => {
       return action.payload;
     },
   },
 });
 
-export const selectCurrentTodoList = (state, listId) =>
-  state.todos ? state.todos.lists[listId] : null;
+// export const selectCurrentTodoList = (state, listId) =>
+//   state.todos ? state.todos.lists[listId] : null;
 
+export const selectCurrentList = (state) => state.todos;
+export const selectTitle = (state) => state.todos.title;
+export const selectTasks = (state) => state.todos.tasks;
 export const { reorderTasks } = todosSlice.actions;
 export default todosSlice.reducer;
