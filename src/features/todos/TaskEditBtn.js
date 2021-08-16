@@ -1,7 +1,7 @@
 import React from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 
-export const TodoEditBtn = ({ isHovering, onEditBtnClick }) => {
+export const TaskEditBtn = ({ isHovering, onEditBtnClick }) => {
   return (
     <div
       className="align-items-center d-flex"

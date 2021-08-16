@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Card, Container, Form, ListGroup, Button } from 'react-bootstrap';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
-import { TodoItem } from './TodoItem';
+import { Task } from './Task';
 import { AddTaskBtn } from './AddTaskBtn';
 
 import { reorder, onDragEnd } from '../../utils/dragAndDrop';
 import { useDispatch, useSelector } from 'react-redux';
 import { reorderTasks, selectTasks } from './todosSlice';
 
-export const TodoList = () => {
+export const TasksList = () => {
   const dispatch = useDispatch();
   const tasks = useSelector(selectTasks);
 
@@ -27,7 +27,7 @@ export const TodoList = () => {
 
   const renderList = () => {
     return tasks.map((todo, index) => (
-      <TodoItem
+      <Task
         todo={todo}
         title={todo.title}
         description={todo.description}

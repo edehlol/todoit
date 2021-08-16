@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
 
-export const TodoModal = ({ show, toggle, todo }) => {
+export const TaskModal = ({ show, toggle, todo }) => {
   return (
     <Modal show={show} onHide={toggle}>
       <Modal.Header closeButton>

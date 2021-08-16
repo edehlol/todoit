@@ -1,7 +1,7 @@
 import React from 'react';
 import { TodoTitle } from './TodoTitle';
 
-export const TodoContent = ({ todo }) => {
+export const TaskContent = ({ todo }) => {
   return (
     <div>
       <TodoTitle title={todo.title} completed={todo.completed} />

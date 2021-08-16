@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { TodoList } from './TodoList';
+import { TasksList } from './TasksList';
 import { fetchTodos, selectCurrentList, selectTitle } from './todosSlice';
 
 export const Todos = () => {
@@ -19,7 +19,7 @@ export const Todos = () => {
         <h1>{todos.title}</h1>
         <h1>{todos.tasks.length}</h1>
       </div>
-      <TodoList />
+      <TasksList />
     </Container>
   );
 };

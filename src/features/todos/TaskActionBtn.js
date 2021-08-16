@@ -3,7 +3,7 @@ import { Popover, ListGroup, OverlayTrigger } from 'react-bootstrap';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BsTrash, BsThreeDots } from 'react-icons/bs';
 
-export const TodoActionsBtn = ({ isHovering }, props) => {
+export const TaskActionBtn = ({ isHovering }, props) => {
   const renderActions = (props) => {
     return (
       <Popover {...props}>

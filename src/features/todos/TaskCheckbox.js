@@ -3,7 +3,7 @@ import { CgRadioCheck } from 'react-icons/cg';
 import { CgRadioChecked } from 'react-icons/cg';
 
 // TODO: completed paramter passed
-export const TodoCheckbox = () => {
+export const TaskCheckbox = () => {
   const [completed, setCompleted] = useState(false);
   const toggleComplete = () => {
     setCompleted(!completed);

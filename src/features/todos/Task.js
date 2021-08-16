@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { ListGroup } from 'react-bootstrap';
 
-import { TodoModal } from './TodoModal';
-import { TodoActionsBtn } from './TodoActionsBtn';
-import { TodoEditBtn } from './TodoEditBtn';
-import { TodoCheckbox } from './TodoCheckbox';
-import { TodoContent } from './TodoContent';
+import { TaskModal } from './TaskModal';
+import { TaskActionBtn } from './TaskActionBtn';
+import { TaskEditBtn } from './TaskEditBtn';
+import { TaskCheckbox } from './TaskCheckbox';
+import { TaskContent } from './TaskContent';
 import { DragBtn } from '../common/DragBtn';
 
-export const TodoItem = React.forwardRef(({ index, todo }, ref) => {
+export const Task = React.forwardRef(({ index, todo }, ref) => {
   const [isHovering, setIsHovering] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const onEditBtnClick = () => {
@@ -35,14 +35,14 @@ export const TodoItem = React.forwardRef(({ index, todo }, ref) => {
         >
           <div className="d-flex  w-100 ">
             <DragBtn provided={provided} isHovering={isHovering} />
-            <TodoCheckbox completed={todo.completed} />
+            <TaskCheckbox completed={todo.completed} />
 
             <div className="d-flex justify-content-between w-100">
-              <TodoContent todo={todo} />
-              <TodoEditBtn isHovering={isHovering} onEditBtnClick={onEditBtnClick} />
+              <TaskContent todo={todo} />
+              <TaskEditBtn isHovering={isHovering} onEditBtnClick={onEditBtnClick} />
             </div>
-            <TodoActionsBtn isHovering={isHovering} />
-            <TodoModal show={showEditModal} toggle={onEditBtnClick} todo={todo} />
+            <TaskActionBtn isHovering={isHovering} />
+            <TaskModal show={showEditModal} toggle={onEditBtnClick} todo={todo} />
           </div>
         </ListGroup.Item>
       )}
