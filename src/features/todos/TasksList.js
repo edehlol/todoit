@@ -7,7 +7,7 @@ import { AddTaskBtn } from './AddTaskBtn';
 
 import { reorder, onDragEnd } from '../../utils/dragAndDrop';
 import { useDispatch, useSelector } from 'react-redux';
-import { reorderTasks, selectTasks } from './todosSlice';
+import { patchUpdateTaskOrder, reorderTasks, selectTasks, updateTaskOrder } from './todosSlice';
 
 export const TasksList = () => {
   const dispatch = useDispatch();
@@ -22,8 +22,10 @@ export const TasksList = () => {
     }
 
     const reordered = reorder(tasks, result.source.index, result.destination.index);
-    dispatch(reorderTasks(reordered));
+    dispatch(updateTaskOrder(reordered));
+    dispatch(patchUpdateTaskOrder(reordered));
   };
+  useEffect(() => {}, [tasks]);
 
   const renderList = () => {
     return tasks.map((todo, index) => (

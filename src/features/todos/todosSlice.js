@@ -26,16 +26,19 @@ export const fetchTodos = createAsyncThunk('todos/fetchTodos', async () => {
   console.log(response.data[0]);
   return response.data[0];
 });
-export const postReorderedTasks = createAsyncThunk('todos/postReorderedTasks', async (tasks) => {
-  const response = await axios.post('http://localhost:3001/todos/');
+export const patchUpdateTaskOrder = createAsyncThunk('todos/postReorderedTasks', async (tasks) => {
+  console.log(tasks);
+  const response = await axios.patch('http://localhost:3001/lists/0', { tasks: tasks });
+  console.log(response.data);
+  return response.data;
 });
 
 const todosSlice = createSlice({
   name: 'todos',
   initialState: null,
   reducers: {
-    reorderTasks(state, action) {
-      state.lists[state.selectedListId].tasks = action.payload;
+    updateTaskOrder(state, action) {
+      state.tasks = action.payload;
     },
   },
   extraReducers: {
@@ -51,5 +54,6 @@ const todosSlice = createSlice({
 export const selectCurrentList = (state) => state.todos;
 export const selectTitle = (state) => state.todos.title;
 export const selectTasks = (state) => state.todos.tasks;
-export const { reorderTasks } = todosSlice.actions;
+
+export const { updateTaskOrder } = todosSlice.actions;
 export default todosSlice.reducer;
