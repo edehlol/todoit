@@ -7,21 +7,21 @@ import { AddTaskBtn } from './AddTaskBtn';
 
 import { reorder, onDragEnd } from '../../utils/dragAndDrop';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchData } from './todosSlice';
+import { selectCurrentTodoList, fetchTodos, reorderTasks } from './todosSlice';
 
-const initialData = [
-  { id: 1, title: 'Take out the garbage', description: 'is anyone there?' },
-  { id: 2, title: 'Watch my favorite show' },
-  { id: 3, title: 'Cook dinner' },
-  { id: 4, title: 'Charge my phone' },
-];
+// const initialData = [
+//   { id: 1, title: 'Take out the garbage', description: 'is anyone there?' },
+//   { id: 2, title: 'Watch my favorite show' },
+//   { id: 3, title: 'Cook dinner' },
+//   { id: 4, title: 'Charge my phone' },
+// ];
 
 export const TodoList = () => {
-  const [todos, setTodos] = useState(initialData);
-  const gg = useSelector((state) => state.todos);
+  const todos = useSelector((state) => selectCurrentTodoList(state, 0));
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(fetchData());
+    dispatch(fetchTodos());
   }, [dispatch]);
 
   const onDragEnd = (result) => {
@@ -32,12 +32,12 @@ export const TodoList = () => {
       return;
     }
 
-    const reordered = reorder(todos, result.source.index, result.destination.index);
-    setTodos(reordered);
+    const reordered = reorder(todos.tasks, result.source.index, result.destination.index);
+    dispatch(reorderTasks(reordered));
   };
 
   const renderList = () => {
-    return todos.map((todo, index) => (
+    return todos.tasks.map((todo, index) => (
       <TodoItem
         todo={todo}
         title={todo.title}
@@ -47,6 +47,10 @@ export const TodoList = () => {
       />
     ));
   };
+  // TODO: add scaffolding loading placeholder
+  if (!todos) {
+    return <div>loading</div>;
+  }
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
