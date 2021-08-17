@@ -16,7 +16,7 @@ export const TasksList = () => {
   const reorderList = (result) => {
     const reordered = onDragEnd(result, tasks);
     if (reordered) {
-      dispatch(updateTaskOrder({ tasks: reordered, listId: 0 }));
+      dispatch(updateTaskOrder(reordered));
       dispatch(patchUpdateTaskOrder(reordered));
     }
   };
