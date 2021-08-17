@@ -4,3 +4,15 @@ export const reorder = (list, startIndex, endIndex) => {
   result.splice(endIndex, 0, removed);
   return result;
 };
+
+export const onDragEnd = (result, list, updateList) => {
+  if (!result.destination) {
+    return;
+  }
+  if (result.source.index === result.destination.index) {
+    return;
+  }
+  const reordered = reorder(list, result.source.index, result.destination.index);
+  // updateList(reordered);
+  return reordered;
+};

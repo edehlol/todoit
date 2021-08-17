@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { ListGroup } from 'react-bootstrap';
-import { reorder } from '../../utils/dragAndDrop';
+import { onDragEnd, reorder } from '../../utils/dragAndDrop';
 import { ListItem } from './ListItem';
 import { AddListModal } from './AddListModal';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { selectLists, updateListOrder, patchUpdateListOrder } from '../todos/todosSlice';
 
 const gg = [{ title: 'Home Chores' }, { title: 'Welcome' }, { title: 'Web Development' }];
 
 export const ListsList = () => {
-  const [lists, setLists] = useState(gg);
+  const dispatch = useDispatch();
+  const lists = useSelector(selectLists);
+  // const [lists, setLists] = useState(gg);
 
   const [show, setShow] = useState(false);
 
@@ -16,15 +21,14 @@ export const ListsList = () => {
     setShow(!show);
   };
 
-  const onDragEnd = (result) => {
-    if (!result.destination) {
-      return;
+  const reorderList = (result) => {
+    const reordered = onDragEnd(result, lists);
+    console.log(reordered);
+
+    if (reordered) {
+      dispatch(updateListOrder(reordered));
+      dispatch(patchUpdateListOrder(reordered));
     }
-    if (result.source.index === result.destination.index) {
-      return;
-    }
-    const reordered = reorder(lists, result.source.index, result.destination.index);
-    setLists(reordered);
   };
   const renderList = () => {
     return lists.map((list, index) => (
@@ -39,7 +43,7 @@ export const ListsList = () => {
   };
   return (
     <>
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={reorderList}>
         <Droppable droppableId="lists">
           {(provided) => (
             <ListGroup variant="flush" ref={provided.innerRef} {...provided.droppableProps}>

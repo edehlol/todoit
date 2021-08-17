@@ -13,19 +13,13 @@ export const TasksList = () => {
   const dispatch = useDispatch();
   const tasks = useSelector(selectTasks);
 
-  const onDragEnd = (result) => {
-    if (!result.destination) {
-      return;
+  const reorderList = (result) => {
+    const reordered = onDragEnd(result, tasks);
+    if (reordered) {
+      dispatch(updateTaskOrder({ tasks: reordered, listId: 0 }));
+      dispatch(patchUpdateTaskOrder(reordered));
     }
-    if (result.destination.index === result.source.index) {
-      return;
-    }
-
-    const reordered = reorder(tasks, result.source.index, result.destination.index);
-    dispatch(updateTaskOrder(reordered));
-    dispatch(patchUpdateTaskOrder(reordered));
   };
-  useEffect(() => {}, [tasks]);
 
   const renderList = () => {
     return tasks.map((todo, index) => (
@@ -44,7 +38,7 @@ export const TasksList = () => {
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onDragEnd={reorderList}>
       <Droppable droppableId={'todo'}>
         {(provided) => (
           <ListGroup variant="flush" ref={provided.innerRef} {...provided.droppableProps}>

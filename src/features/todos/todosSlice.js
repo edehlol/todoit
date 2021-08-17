@@ -22,23 +22,43 @@ import axios from 'axios';
 // });
 
 export const fetchTodos = createAsyncThunk('todos/fetchTodos', async () => {
-  const response = await axios.get('http://localhost:3001/lists?id=0');
-  console.log(response.data[0]);
-  return response.data[0];
-});
-export const patchUpdateTaskOrder = createAsyncThunk('todos/postReorderedTasks', async (tasks) => {
-  console.log(tasks);
-  const response = await axios.patch('http://localhost:3001/lists/0', { tasks: tasks });
+  // const response = await axios.get(`http://localhost:3001/lists/${id}`);
+  const response = await axios.get('http://localhost:3001/lists');
   console.log(response.data);
   return response.data;
 });
+
+export const patchUpdateTaskOrder = createAsyncThunk(
+  'todos/patchUpdateTaskOrder',
+  async (tasks) => {
+    const response = await axios.patch('http://localhost:3001/lists/0', { tasks: tasks });
+    return response.data;
+  }
+);
+
+// BUGGED
+export const patchUpdateListOrder = createAsyncThunk(
+  'todos/patchUpdateListOrder',
+  async (lists) => {
+    const response = await axios.patch('http://localhost:3001/lists/0', { lists: lists });
+    return response.data;
+  }
+);
 
 const todosSlice = createSlice({
   name: 'todos',
   initialState: null,
   reducers: {
     updateTaskOrder(state, action) {
-      state.tasks = action.payload;
+      const { tasks, listId } = action.payload;
+      const list = state.find((list) => list.id === listId);
+      list.tasks = tasks;
+    },
+    updateListOrder(state, action) {
+      return action.payload;
+    },
+    addNewTask(state, action) {
+      state.tasks.push(action.payload);
     },
   },
   extraReducers: {
@@ -51,9 +71,10 @@ const todosSlice = createSlice({
 // export const selectCurrentTodoList = (state, listId) =>
 //   state.todos ? state.todos.lists[listId] : null;
 
-export const selectCurrentList = (state) => state.todos;
-export const selectTitle = (state) => state.todos.title;
-export const selectTasks = (state) => state.todos.tasks;
+export const selectCurrentList = (state) => (state.todos ? state.todos[0] : null);
+export const selectTasks = (state) => (state.todos ? state.todos[0].tasks : null);
+export const selectLists = (state) => (state.todos ? state.todos : null);
+// export const selectTitle = (state) => state.todos.title;
 
-export const { updateTaskOrder } = todosSlice.actions;
+export const { updateTaskOrder, updateListOrder, addNewTask } = todosSlice.actions;
 export default todosSlice.reducer;
