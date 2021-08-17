@@ -41,7 +41,7 @@ export const Task = React.forwardRef(({ index, todo }, ref) => {
               <TaskContent todo={todo} />
               <TaskEditBtn isHovering={isHovering} onEditBtnClick={onEditBtnClick} />
             </div>
-            <TaskActionBtn isHovering={isHovering} />
+            <TaskActionBtn isHovering={isHovering} taskId={todo.id} />
             <TaskModal show={showEditModal} toggle={onEditBtnClick} todo={todo} />
           </div>
         </ListGroup.Item>

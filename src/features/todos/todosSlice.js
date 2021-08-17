@@ -65,6 +65,11 @@ const todosSlice = createSlice({
     changeSelectedProject(state, action) {
       state.selectedProjectId = action.payload;
     },
+    deleteTask(state, action) {
+      state.projects[state.selectedProjectId].tasks = state.projects[
+        state.selectedProjectId
+      ].tasks.filter((task) => task.id !== action.payload);
+    },
   },
   extraReducers: {
     [fetchTodos.fulfilled]: (state, action) => {
@@ -78,11 +83,13 @@ const todosSlice = createSlice({
 
 export const selectCurrentList = (state) =>
   state.todos.projects ? state.todos.projects[state.todos.selectedProjectId] : null;
+
 export const selectTasks = (state) =>
   state.todos.projects ? state.todos.projects[state.todos.selectedProjectId].tasks : null;
+
 export const selectLists = (state) => (state.todos.projects ? state.todos.projects : null);
 // export const selectTitle = (state) => state.todos.title;
 
-export const { updateTaskOrder, updateListOrder, addNewTask, changeSelectedProject } =
+export const { updateTaskOrder, updateListOrder, addNewTask, changeSelectedProject, deleteTask } =
   todosSlice.actions;
 export default todosSlice.reducer;
