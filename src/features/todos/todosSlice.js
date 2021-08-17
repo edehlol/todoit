@@ -62,6 +62,9 @@ const todosSlice = createSlice({
     addNewTask(state, action) {
       state.tasks.push(action.payload);
     },
+    changeSelectedProject(state, action) {
+      state.selectedProjectId = action.payload;
+    },
   },
   extraReducers: {
     [fetchTodos.fulfilled]: (state, action) => {
@@ -80,5 +83,6 @@ export const selectTasks = (state) =>
 export const selectLists = (state) => (state.todos.projects ? state.todos.projects : null);
 // export const selectTitle = (state) => state.todos.title;
 
-export const { updateTaskOrder, updateListOrder, addNewTask } = todosSlice.actions;
+export const { updateTaskOrder, updateListOrder, addNewTask, changeSelectedProject } =
+  todosSlice.actions;
 export default todosSlice.reducer;

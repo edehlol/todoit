@@ -14,7 +14,7 @@ export const Todos = () => {
     <Container>
       <div className="d-flex justify-content-between">
         <h1>{todos.title}</h1>
-        {/* <h1>{todos.tasks.length}</h1> */}
+        <h1>{todos.tasks.length}</h1>
       </div>
       <TasksList />
     </Container>
